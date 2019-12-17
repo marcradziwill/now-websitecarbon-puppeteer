@@ -6,6 +6,7 @@
   "author": "Marc Radziwill <hallo@marcradziwill.com>",
   "dependencies": {
     "chrome-aws-lambda": "2.0.0",
-    "chrome-finder": "1.0.6"
+    "chrome-finder": "1.0.6",
+    "puppeteer-core": "2.0.0"
   }
 }

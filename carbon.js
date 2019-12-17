@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
       executablePath: await chrome.executablePath,
       headless: chrome.headless,
     });
+    console.log(browser)
     const page = await browser.newPage();
     await page.tracing.start();
     await page.goto('https://www.websitecarbon.com/');
@@ -34,7 +35,7 @@ module.exports = async (req, res) => {
     const hostingReport = await page.$eval(hostingSelector, (el) =>
       el.innerHTML.replace(/(\r\n|\n|\r)/gm, '').trim(),
     );
-
+    
     const statsList = await page.$$eval(statsSelector, (stats) => {
       return stats.map((stat) => {
         return stat.innerHTML.replace(/(\r\n|\n|\r)/gm, '').trim();
@@ -50,9 +51,10 @@ module.exports = async (req, res) => {
       co2: emissionCount,
       stats: statsList,
     };
-
-    return obj;
+  
+    res.status(200).send(obj);
+    
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error.message);
   }
 };
